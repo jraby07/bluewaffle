@@ -1,2 +1,0 @@
-# bluewaffle
-BeetusBuddy

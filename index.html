@@ -3,12 +3,76 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Beetus Buddy</title>
-<link rel="manifest" href="manifest.json" />
-<link rel="stylesheet" href="styles.css" />
-<script defer src="app.js"></script>
+<title>Beetus Buddy Prototype</title>
+<style>
+  body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #2a2a72;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  #app-root {
+    background: #fff;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.6);
+    text-align: center;
+    width: 320px;
+  }
+  h1 {
+    font-size: 3em;
+    margin-bottom: 0.2em;
+    color: #ff3d7f;
+    text-shadow: 2px 2px #ffacd9;
+  }
+  p {
+    font-size: 2em;
+    margin: 20px 0;
+    color: #333;
+  }
+  button {
+    background: #ff3d7f;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 1.5em;
+    margin: 10px;
+    padding: 15px 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255, 61, 127, 0.6);
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #e02c63;
+  }
+</style>
 </head>
 <body>
-  <div id="app-root"></div>
+  <div id="app-root">
+    <h1>Beetus Buddy</h1>
+    <p>Glucose Level: <span id="glucose-level">100</span> mg/dL</p>
+    <button id="inc-btn">Increase 💉</button>
+    <button id="dec-btn">Decrease 🍭</button>
+  </div>
+
+  <script>
+    const glucoseSpan = document.getElementById('glucose-level');
+    let glucose = 100;
+
+    document.getElementById('inc-btn').addEventListener('click', () => {
+      glucose += 5;
+      glucoseSpan.textContent = glucose;
+    });
+
+    document.getElementById('dec-btn').addEventListener('click', () => {
+      glucose = Math.max(0, glucose - 5);
+      glucoseSpan.textContent = glucose;
+    });
+  </script>
 </body>
 </html>

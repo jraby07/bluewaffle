@@ -1,0 +1,49 @@
+import React, { useState, useEffect, createContext } from 'react';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { View, StatusBar } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LottieView from 'lottie-react-native';
+import SetupScreen from './SetupScreen';
+import HomeScreen from './HomeScreen';
+
+export const ThemeContext = createContext();
+const Stack = createStackNavigator();
+
+export default function App() {
+  const [isSetup, setIsSetup] = useState(false);
+  const [theme, setTheme] = useState('neutral');
+
+  useEffect(() => {
+    AsyncStorage.getItem('isSetup').then(v => v === 'true' && setIsSetup(true));
+    AsyncStorage.getItem('theme').then(v => v && setTheme(v));
+  }, []);
+
+  const navTheme = theme === 'dark' ? DarkTheme : DefaultTheme;
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <View style={{ flex: 1, backgroundColor: navTheme.colors.background }}>
+        <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} translucent />
+        {!isSetup && (
+          <LottieView
+            source={{ uri: 'https://assets5.lottiefiles.com/packages/lf20_cbzna26u.json' }}
+            autoPlay loop
+            style={{ position: 'absolute', inset: 0 }}
+          />
+        )}
+        <NavigationContainer theme={navTheme}>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            {!isSetup ? (
+              <Stack.Screen name="Setup">
+                {props => <SetupScreen {...props} onSetup={() => setIsSetup(true)} />}
+              </Stack.Screen>
+            ) : (
+              <Stack.Screen name="Home" component={HomeScreen} />
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </View>
+    </ThemeContext.Provider>
+  );
+}

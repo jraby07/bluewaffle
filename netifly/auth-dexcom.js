@@ -1,13 +1,22 @@
-// netlify/functions/auth-dexcom.js
-exports.handler = async () => {
-  const redirectUri = encodeURIComponent(
-    'https://<YOUR-SITE>.netlify.app/.netlify/functions/dexcom-callback'
-  );
-  const url =
-    `https://sandbox-api.dexcom.com/v2/oauth2/login?` +
-    `client_id=${process.env.DEXCOM_CLIENT_ID}` +
-    `&response_type=code` +
-    `&scope=offline_access` +
-    `&redirect_uri=${redirectUri}`;
-  return { statusCode: 302, headers: { Location: url } };
-};
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('app-root');
+  root.innerHTML = `
+    <h1>Beetus Buddy</h1>
+    <p>Glucose Level: <span id="glucose-level">100</span> mg/dL</p>
+    <button id="inc-btn">Increase</button>
+    <button id="dec-btn">Decrease</button>
+  `;
+
+  const glucoseSpan = document.getElementById('glucose-level');
+  let glucose = 100;
+
+  document.getElementById('inc-btn').addEventListener('click', () => {
+    glucose += 5;
+    glucoseSpan.textContent = glucose;
+  });
+
+  document.getElementById('dec-btn').addEventListener('click', () => {
+    glucose = Math.max(0, glucose - 5);
+    glucoseSpan.textContent = glucose;
+  });
+});

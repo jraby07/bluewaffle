@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
   root.innerHTML = `
     <h1>Beetus Buddy</h1>
     <p>Glucose Level: <span id="glucose-level">100</span> mg/dL</p>
-    <button id="inc-btn">Increase</button>
-    <button id="dec-btn">Decrease</button>
+    <button id="inc-btn">Increase 💉</button>
+    <button id="dec-btn">Decrease 🍭</button>
   `;
 
   const glucoseSpan = document.getElementById('glucose-level');
